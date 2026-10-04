@@ -116,12 +116,12 @@ void deleteList(Node *& head) {
 
 int main() {
     Node *head = nullptr;
-
     // create a linked list of size SIZE with random numbers 0-99
     for (int i = 0; i < SIZE; i++) {
         int tmp_val = rand() % 100;
         addNodeFront(head, tmp_val);
     }
+
     output(head);
     deleteNode(head);
     output(head);
@@ -133,6 +133,39 @@ int main() {
 
     insertNode(head);
     deleteList(head);
+
+    const string MENU = "F - add node to front \n"
+    + "T - add node to tail \n"
+    * "D - delete node \n"
+    + "I - insert node \n"
+    + "E - delet liste and exit \n";
+    char choice;
+    cout << MENU;
+    cin >> choice;
+    while (choice != 'E') {
+        switch(choice) {
+            case 'F':
+                break;
+            case 'T':
+                break;
+            case 'D':
+                break;
+            case 'I':
+                break;
+            case 'E':
+                break;
+            default:
+                cout << "Invalid choice. try again\n";
+                break;
+        }
+        if (head)
+            output(head);
+        cout << MENU;
+        cin >> choice;
+
+    }
+
+
 
     return 0;
 }
