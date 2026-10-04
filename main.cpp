@@ -11,12 +11,64 @@ struct Node {
 // when you use "addNodeFront", you want it to add the node, not require an = beforehand
 // using reference also prevents duplicate nodes being created
 void addNodeFront(Node *&, float);
-bool addNodeTail(Node *&);
+void addNodeTail(Node *&, float);
 bool deleteNode(Node *&);
 void insertNode(Node *&);
 void deleteList(Node *&);
-
 void output(Node *);
+
+int main() {
+    Node *head = nullptr;
+    // create a linked list of size SIZE with random numbers 0-99
+    for (int i = 0; i < SIZE; i++) {
+        int tmp_val = rand() % 100;
+        addNodeFront(head, tmp_val);
+    }
+
+    output(head);
+    deleteNode(head);
+    output(head);
+
+    //////////////////////kept temporarily to make main() below work
+    Node *current = head;
+    Node *prev = nullptr;
+    int entry;
+
+    insertNode(head);
+    deleteList(head);
+
+    const string MENU = "F - add node to front \n"
+    + "T - add node to tail \n"
+    * "D - delete node \n"
+    + "I - insert node \n"
+    + "E - delet liste and exit \n";
+    char choice;
+    cout << MENU;
+    cin >> choice;
+    while (choice != 'E') {
+        switch(choice) {
+            case 'F':
+                break;
+            case 'T':
+                break;
+            case 'D':
+                break;
+            case 'I':
+                break;
+            case 'E':
+                break;
+            default:
+                cout << "Invalid choice. try again\n";
+                break;
+        }
+        if (head)
+            output(head);
+        cout << MENU;
+        cin >> choice;
+
+    }
+    return 0;
+}
 
 void addNodeFront(Node *& head, float val) {
     Node *newVal = new Node;
@@ -30,6 +82,23 @@ void addNodeFront(Node *& head, float val) {
             newVal->value = val;
             head = newVal;
         }
+}
+
+void addNodeTail(Node *& head, float val) {
+    Node *newVal = new Node;
+    if (!head) {
+        head = newVal;
+        newVal->next = nullptr;
+        newVal->value = val;
+    } else {
+        Node *current = head;
+        // traverses to end of list
+        while (current->next != nullptr)
+            current = current->next;
+        current->next = newVal;
+        newVal->next = nullptr;
+        newVal->value = val;
+    }
 }
 
 bool deleteNode(Node *& head) {
@@ -114,61 +183,7 @@ void deleteList(Node *& head) {
     output(head);
 }
 
-int main() {
-    Node *head = nullptr;
-    // create a linked list of size SIZE with random numbers 0-99
-    for (int i = 0; i < SIZE; i++) {
-        int tmp_val = rand() % 100;
-        addNodeFront(head, tmp_val);
-    }
 
-    output(head);
-    deleteNode(head);
-    output(head);
-
-    //////////////////////kept temporarily to make main() below work
-    Node *current = head;
-    Node *prev = nullptr;
-    int entry;
-
-    insertNode(head);
-    deleteList(head);
-
-    const string MENU = "F - add node to front \n"
-    + "T - add node to tail \n"
-    * "D - delete node \n"
-    + "I - insert node \n"
-    + "E - delet liste and exit \n";
-    char choice;
-    cout << MENU;
-    cin >> choice;
-    while (choice != 'E') {
-        switch(choice) {
-            case 'F':
-                break;
-            case 'T':
-                break;
-            case 'D':
-                break;
-            case 'I':
-                break;
-            case 'E':
-                break;
-            default:
-                cout << "Invalid choice. try again\n";
-                break;
-        }
-        if (head)
-            output(head);
-        cout << MENU;
-        cin >> choice;
-
-    }
-
-
-
-    return 0;
-}
 
 void output(Node *hd) {
     if (!hd) {
