@@ -7,8 +7,62 @@ struct Node {
     float value;
     Node *next;
 };
+// I'm passing by reference because it also the functions more straightforward to use IMO, 
+// when you use "addNodeFront", you want it to add the node, not require an = beforehand
+void addNodeFront(Node *&, float);
+bool addNodeTail(Node *&);
+bool deleteNode(Node *&);
+bool insertNodeAfter(Node *&, Node*&);
+bool deleteList(Node *&);
 
 void output(Node *);
+
+void addNodeFront(Node *& head, float val) {
+    Node *newVal = new Node;
+    if (!head) {
+            head = newVal;
+            newVal->next = nullptr;
+            newVal->value = val;
+        }
+        else {
+            newVal->next = head;
+            newVal->value = val;
+            head = newVal;
+        }
+}
+
+bool deleteNode(Node *& head) {
+    cout << "Which node to delete? " << endl;
+    output(head);
+    int entry;
+    cout << "Choice --> ";
+    cin >> entry;
+
+    // traverse that many times and delete that node
+    Node *current = head;
+    Node *prev = nullptr;  // start prev as nullptr to detect head deletion
+
+    for (int i = 0; i < (entry - 1); i++) {
+        prev = current;
+        current = current->next;
+        // avoids segmentation fault by returning if entry is out of list
+        if (!current->next)
+            return false;
+    }
+
+    // at this point, delete current and reroute pointers
+    if (current) {
+        if (prev == nullptr) {
+            // deleting the head node
+            head = current->next;
+        } else {
+            prev->next = current->next;
+        }
+        delete current;
+        current = nullptr;
+    }
+    return true;
+} 
 
 int main() {
     Node *head = nullptr;
@@ -17,24 +71,12 @@ int main() {
     // create a linked list of size SIZE with random numbers 0-99
     for (int i = 0; i < SIZE; i++) {
         int tmp_val = rand() % 100;
-        Node *newVal = new Node;
-        
-        // adds node at head
-        if (!head) {
-            head = newVal;
-            newVal->next = nullptr;
-            newVal->value = tmp_val;
-        }
-        else {
-            newVal->next = head;
-            newVal->value = tmp_val;
-            head = newVal;
-        }
+        addNodeFront(head, tmp_val);
     }
     output(head);
 
     // deleting a node
-    cout << "Which node to delete? " << endl;
+    /*cout << "Which node to delete? " << endl;
     output(head);
     int entry;
     cout << "Choice --> ";
@@ -59,8 +101,14 @@ int main() {
         }
         delete current;
         current = nullptr;
-    }
+    }*/
+    deleteNode(head);
     output(head);
+
+    //////////////////////kept temporarily to make main() below work
+    Node *current = head;
+    Node *prev = nullptr;
+    int entry;
 
     // insert a node
     cout << "After which node to insert 10000? " << endl;
