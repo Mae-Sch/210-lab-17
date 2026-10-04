@@ -13,7 +13,7 @@ struct Node {
 void addNodeFront(Node *&, float);
 void addNodeTail(Node *&, float);
 bool deleteNode(Node *&);
-void insertNode(Node *&);
+void insertNode(Node *&, float);
 void deleteList(Node *&);
 void output(Node *);
 
@@ -25,35 +25,40 @@ int main() {
         addNodeFront(head, tmp_val);
     }
 
-    output(head);
+    /*output(head);
     deleteNode(head);
     output(head);
 
-    //////////////////////kept temporarily to make main() below work
-    Node *current = head;
-    Node *prev = nullptr;
-    int entry;
-
     insertNode(head);
-    deleteList(head);
+    deleteList(head);*/
 
-    const string MENU = "F - add node to front \n"
-    + "T - add node to tail \n"
-    * "D - delete node \n"
-    + "I - insert node \n"
-    + "E - delet liste and exit \n";
+    const string MENU = "F - add node to front \nT - add node to tail \nD - delete node \nI - insert node \nE - delete list and exit \n";
     char choice;
     cout << MENU;
     cin >> choice;
+    float val;
     while (choice != 'E') {
         switch(choice) {
             case 'F':
+                output(head);
+                cout << "value to add: ";
+                cin >> val;
+                addNodeFront(head, val);
                 break;
             case 'T':
+                output(head);
+                cout << "value to add: ";
+                cin >> val;
+                addNodeTail(head, val);
                 break;
             case 'D':
+                deleteNode(head);
                 break;
             case 'I':
+                output(head);
+                cout << "value to add: ";
+                cin >> val;
+                insertNode(head, val);
                 break;
             case 'E':
                 break;
@@ -134,13 +139,13 @@ bool deleteNode(Node *& head) {
     return true;
 } 
 
-void insertNode(Node *& head) {
+void insertNode(Node *& head, float val) {
     Node *current = head;
     Node *prev = nullptr;
     int entry;
     int count = 1;
 
-    cout << "After which node to insert 10000? " << endl;
+    cout << "After which node to insert " << val << "? " << endl;
     current = head;
     while (current) {
         cout << "[" << count++ << "] " << current->value << endl;
@@ -159,7 +164,7 @@ void insertNode(Node *& head) {
 
     // at this point, insert a node between prev and current
     Node *newnode = new Node;
-    newnode->value = 10000;
+    newnode->value = val;
     newnode->next = current;
 
     if (prev == nullptr) {
@@ -182,8 +187,6 @@ void deleteList(Node *& head) {
     head = nullptr;
     output(head);
 }
-
-
 
 void output(Node *hd) {
     if (!hd) {
